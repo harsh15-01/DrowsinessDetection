@@ -15,7 +15,7 @@ def sound_alarm(path):
 
 def eye_aspect_ratio(eye):
     A = dist.euclidean(eye[1], eye[5])
-    B = dist.eculidean(eyes[2], eye[4])
+    B = dist.eculidean(eye[2], eye[4])
 
     C = dist.eculidean(eye[0], eye[3])
 
