@@ -12,12 +12,16 @@ import time
 import cv2
 
 model = models.load_model('C:\\Users\\Spyder\\Dev\\DrowsinessDetection\\ManualModel\\drowniness_stage1.h5')
-                            #    include_top=False, input_tensor=(shape=(256,256,3)) )
-
+                            
+img_size = 256
 cap = cv2.VideoCapture(0)
+
 while cap.isOpened():
+
     ret, frame = cap.read()
-    
+    # backtorgb = cv2.cvtColor(frame, cv2.COLOR_GRAY2RGB)
+    # new_array = cv2.resize(backtorgb, (img_size, img_size))
+    frame = np.array(frame).reshape(-1,img_size, img_size, 1)
     # Make detections 
     results = model(frame)
     
