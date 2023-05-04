@@ -1,41 +1,57 @@
-import cv2
 import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
-#from email.utils import COMMASPACE
-from email import encoders
+from email.mime.multipart import MIMEMultipart
+from email.mime.application import MIMEApplication
+import os
 
-# Define email credentials and settings
-SMTP_SERVER = 'smtp.gmail.com'
-SMTP_PORT = 465
-SMTP_USERNAME = '2005084@kiit.ac.in'
-SMTP_PASSWORD = 'kiit@1234'
-EMAIL_FROM = '205084@kiit.ac.in'
-EMAIL_TO = 'itsthechamp0074@gmail.com'
-EMAIL_SUBJECT = 'Facial recognition screenshot'
 
-# Load the screenshot image using OpenCV
-screenshot_path = 'Screenshot.png'
-img = cv2.imread(screenshot_path)
+def sending(recipient_email):
+    
 
-# Encode the image to bytes and create the email attachment
-attachment = MIMEBase('application', "octet-stream")
-attachment.set_payload(cv2.imencode('.png', img)[1].tostring())
-encoders.encode_base64(attachment)
-attachment.add_header('Content-Disposition', 'attachment', filename='screenshot.png')
 
-# Create the email message
-msg = MIMEMultipart()
-msg['From'] = EMAIL_FROM
-msg['To'] = EMAIL_TO
-msg['Subject'] = 'facial recognition screenshot for security issues'
-msg.attach(MIMEText('Facial recognition screenshot is attached.'))
-msg.attach(attachment)
+# Define email sender and recipient
+    sender_email = 'arnavsha94.jpr@gmail.com'
+    sender_name = 'Arnav'
+    
 
-# Connect to the SMTP server and send the email
-smtp_server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-smtp_server.starttls()
-smtp_server.login(SMTP_USERNAME, SMTP_PASSWORD)
-smtp_server.sendmail(EMAIL_FROM, EMAIL_TO, msg.as_string())
-smtp_server.quit()
+# Create message object
+    msg = MIMEMultipart()
+    msg['From'] = f'{sender_name} <{sender_email}>'
+    msg['To'] = recipient_email
+    msg['Subject'] = 'Unknown Person Boarding'
+
+# Add message body
+    message = ''' Dear Sir,
+    
+    Some Unknown Person Boarded your car, please check the attachment to see his face!!
+
+Thanking You
+Yours faithfully
+Team Suvery Corps'''
+    msg.attach(MIMEText(message, 'plain'))
+
+# Add attachment
+    # attachment_file_path = 'C://Users//gupta//OneDrive//Desktop//Email Script//out//'+roll+'.png'
+    attachment_file_path = 'screenshot.jpeg'
+    attachment_file_name = os.path.basename(attachment_file_path)
+    with open(attachment_file_path, 'rb') as f:
+        attachment = MIMEApplication(f.read(), _subtype='txt')
+        attachment.add_header('content-disposition', 'attachment', filename=attachment_file_name)
+        msg.attach(attachment)
+
+# Set up SMTP server
+    smtp_server = 'smtp.gmail.com'
+    smtp_port = 587
+    smtp_username = '2105701@kiit.ac.in'
+    smtp_password = 'zcdrstbclvyclufc'
+
+# Create SMTP connection and send email
+    with smtplib.SMTP(smtp_server, smtp_port) as server:
+        server.starttls()
+        server.login(smtp_username, smtp_password)
+        text = msg.as_string()
+        server.sendmail(sender_email, recipient_email, text)
+
+    print('Email sent successfully with attachment.')
+
+sending('itsthechamp0074@gmail.com')

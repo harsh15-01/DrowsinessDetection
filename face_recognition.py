@@ -2,6 +2,7 @@ import pickle
 import cv2
 from Drowsiness import Drowsy
 from datetime import datetime
+from smptp import mailing
 from utils import face_rects
 from utils import face_encodings
 from utils import nb_of_matches
@@ -36,7 +37,8 @@ while True:
         # if there is no match for any name, then we set the name to "Unknown"
         if all(count == 0 for count in counts.values()):
             name = "Unknown"
-            # cv2.imwrite("screenshot.png", frame)
+            cv2.imwrite("screenshot.png", frame)
+            mailing('itsthechamp0074@gmail.com')
             # break
         # otherwise, we get the name with the highest number of matches
         else:
