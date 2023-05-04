@@ -2,13 +2,13 @@ import pickle
 import cv2
 from Drowsiness import Drowsy
 from datetime import datetime
-from smptp import mailing
+from smtp import mailing
 from utils import face_rects
 from utils import face_encodings
 from utils import nb_of_matches
 from pymongo import MongoClient
 
-# file = open("log.txt", "a") 
+file = open("log.txt", "a") 
 
 # load the encodings + names dictionary
 with open("encodings.pickle", "rb") as f:
@@ -47,18 +47,18 @@ while True:
         # add the name to the list of names
         names.append(name)
         
-        # file.write(name)
+        file.write(name)
             # file.write(datetime)
-        # file.write(" ")
-        # file.write(datetime.now().strftime("%d-%b-%Y (%H:%M:%S.%f)"))
-        # file.write("\n")
-        # file.close()
-        connection_string= "mongodb+srv://minor.p0qjtgg.mongodb.net/?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority "
-        client = MongoClient(connection_string)
-        db = client["log"]
-        collection = db["names"]
-        post = {"id":"name"}
-        collection.insert_one(post)
+        file.write(" ")
+        file.write(datetime.now().strftime("%d-%b-%Y (%H:%M:%S.%f)"))
+        file.write("\n")
+        file.close()
+        # connection_string= "mongodb+srv://minor.p0qjtgg.mongodb.net/?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority "
+        # client = MongoClient(connection_string)
+        # db = client["log"]
+        # collection = db["names"]
+        # post = {"id":"name"}
+        # collection.insert_one(post)
 
 
         

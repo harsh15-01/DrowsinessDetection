@@ -5,7 +5,7 @@ from email.mime.application import MIMEApplication
 import os
 
 
-def sending(recipient_email):
+def mailing(recipient_email):
     
 
 
@@ -54,4 +54,4 @@ Team Suvery Corps'''
 
     print('Email sent successfully with attachment.')
 
-sending('itsthechamp0074@gmail.com')
+# mailing('itsthechamp0074@gmail.com')
